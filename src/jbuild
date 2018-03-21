@@ -22,6 +22,16 @@ let ocamlopt_flags =
   | _ -> ocamlc_flags ^ " -O3"
 
 ;; Jbuild_plugin.V1.send @@ Format.sprintf "
+(library
+ ((name ocamlformat_lib)
+  (flags
+   (-w +a-4-6-9-40-41-42-44-45-48@50
+    -strict-formats -strict-sequence -principal
+    -short-paths -bin-annot -keep-docs -unboxed-types
+    -open Import))
+  (modules (Ast Cmts Conf Fmt_ast Fmt Migrate_ast Normalize Reason Translation_unit Version))
+  (libraries (cmdliner ocamlformat_support import ocaml-migrate-parsetree unix))))
+
 (rule
  ((targets (Version.ml))
   (action (run ../tools/gen_version.sh Version.ml))
@@ -41,7 +51,8 @@ let ocamlopt_flags =
     -open Import))
   (ocamlc_flags (%s))
   (ocamlopt_flags (%s))
-  (libraries (cmdliner ocamlformat_support import ocaml-migrate-parsetree unix))))
+  (modules (ocamlformat ocamlformat_reason))
+  (libraries (cmdliner ocamlformat_lib ocamlformat_support import ocaml-migrate-parsetree unix))))
 
 (install
  ((section bin)

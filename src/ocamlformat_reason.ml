@@ -8,6 +8,7 @@
  *  LICENSE file in the root directory of this source tree.           *
  *                                                                    *
  **********************************************************************)
+open Ocamlformat_lib
 
 (** OCamlFormat to convert Reason code to OCaml *)
 
